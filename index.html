@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Jeff's Cuisine — Filipino food in Atwater, CA. Lumpia, pancit, adobo, and party trays for dine-in, takeout, and catering. Serving Atwater, Merced, and the Central Valley." />
     <title>Jeff's Cuisine — Filipino Comfort Food &amp; Catering | Atwater, CA</title>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Jeff's Cuisine" />
+    <meta property="og:url" content="https://jeffscuisine.netlify.app/" />
+    <meta property="og:title" content="Jeff's Cuisine — Filipino Comfort Food &amp; Catering | Atwater, CA" />
+    <meta property="og:description" content="Authentic lumpia, pancit, adobo, and more. Dine-in, takeout, and full-service catering in Atwater, CA — serving Merced and the Central Valley." />
+    <meta property="og:image" content="https://jeffscuisine.netlify.app/4BF34EED-6190-424E-AF00-25B068EF1C03.PNG" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Jeff's Cuisine — Filipino Comfort Food &amp; Catering | Atwater, CA" />
+    <meta name="twitter:description" content="Authentic lumpia, pancit, adobo, and more. Dine-in, takeout, and full-service catering in Atwater, CA." />
+    <meta name="twitter:image" content="https://jeffscuisine.netlify.app/4BF34EED-6190-424E-AF00-25B068EF1C03.PNG" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" />
@@ -40,6 +54,14 @@
     </script>
   </head>
   <body>
+    <form name="catering" netlify hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="date" name="event-date" />
+      <input type="number" name="guests" />
+      <textarea name="message"></textarea>
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

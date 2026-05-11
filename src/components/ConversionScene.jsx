@@ -1,6 +1,41 @@
+import { useState } from 'react';
 import { MapPin } from 'lucide-react';
 
+const INITIAL = { name: '', email: '', phone: '', 'event-date': '', guests: '' };
+
 export default function ConversionScene() {
+  const [fields, setFields] = useState(INITIAL);
+  const [status, setStatus] = useState('idle'); // idle | submitting | success | error
+
+  function handleChange(e) {
+    setFields(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus('submitting');
+    // NOTE: Replace 'YOUR_FORMSPREE_ID' with your actual Formspree ID
+    const FORMSPREE_ID = "YOUR_FORMSPREE_ID"; 
+    
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(fields)
+      });
+      
+      if (!res.ok) throw new Error('Formspree error');
+      
+      setStatus('success');
+      setFields(INITIAL);
+    } catch {
+      setStatus('error');
+    }
+  }
+
   return (
     <section id="contact" className="section" style={{ padding: '4rem 0', minHeight: 'auto' }}>
       <img
@@ -48,33 +83,52 @@ export default function ConversionScene() {
           <p className="text-sand" style={{ marginBottom: '2rem', opacity: 0.75, fontSize: '0.95rem' }}>
             Party trays, full-service catering, and custom Filipino menus for events in Atwater, Merced, and surrounding areas.
           </p>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <div className="form-group">
-              <label htmlFor="cf-name">Name</label>
-              <input id="cf-name" type="text" placeholder="Your Name" required />
+
+          {status === 'success' ? (
+            <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+              <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '1.4rem', color: 'var(--color-mango)', marginBottom: '0.75rem' }}>
+                Salamat! We'll be in touch soon.
+              </p>
+              <p className="text-sand" style={{ opacity: 0.75 }}>
+                Your catering request has been received. Expect a call or email from us within 1 business day.
+              </p>
             </div>
-            <div className="form-group">
-              <label htmlFor="cf-email">Email</label>
-              <input id="cf-email" type="email" placeholder="you@example.com" required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="cf-phone">Phone</label>
-              <input id="cf-phone" type="tel" placeholder="(555) 000-0000" />
-            </div>
-            <div className="form-group" style={{ display: 'flex', gap: '1rem' }}>
-              <div style={{ flex: 1 }}>
-                <label htmlFor="cf-date">Event Date</label>
-                <input id="cf-date" type="date" />
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+            >
+              <div className="form-group">
+                <label htmlFor="cf-name">Name</label>
+                <input id="cf-name" name="name" type="text" placeholder="Your Name" required value={fields.name} onChange={handleChange} />
               </div>
-              <div style={{ flex: 1 }}>
-                <label htmlFor="cf-guests">Guest Count</label>
-                <input id="cf-guests" type="number" placeholder="Estimated guests" min="1" />
+              <div className="form-group">
+                <label htmlFor="cf-email">Email</label>
+                <input id="cf-email" name="email" type="email" placeholder="you@example.com" required value={fields.email} onChange={handleChange} />
               </div>
-            </div>
-            <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '1rem' }}>
-              Request Quote
-            </button>
-          </form>
+              <div className="form-group">
+                <label htmlFor="cf-phone">Phone</label>
+                <input id="cf-phone" name="phone" type="tel" placeholder="(555) 000-0000" value={fields.phone} onChange={handleChange} />
+              </div>
+              <div className="form-group" style={{ display: 'flex', gap: '1rem' }}>
+                <div style={{ flex: 1 }}>
+                  <label htmlFor="cf-date">Event Date</label>
+                  <input id="cf-date" name="event-date" type="date" value={fields['event-date']} onChange={handleChange} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label htmlFor="cf-guests">Guest Count</label>
+                  <input id="cf-guests" name="guests" type="number" placeholder="Estimated guests" min="1" value={fields.guests} onChange={handleChange} />
+                </div>
+              </div>
+              {status === 'error' && (
+                <p style={{ color: '#ff6b6b', fontSize: '0.9rem', marginTop: '0.5rem' }}>
+                  Something went wrong. Please call us at (209) 386-3525 or try again.
+                </p>
+              )}
+              <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '1rem' }} disabled={status === 'submitting'}>
+                {status === 'submitting' ? 'Sending…' : 'Request Quote'}
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </section>
