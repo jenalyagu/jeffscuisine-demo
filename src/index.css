@@ -186,6 +186,16 @@ p { font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.6; }
   background: rgba(255, 255, 255, 0.15);
 }
 
+.form-flex {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.form-flex > div {
+  flex: 1 1 250px; /* Allow wrapping when below 250px per item */
+  min-width: 0;
+}
+
 /* Floating UI */
 .floating-ui {
   position: fixed;
@@ -225,5 +235,9 @@ p { font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.6; }
   }
   .parallax-bg {
     height: 100%; /* Reduce parallax for performance on mobile */
+  }
+  .form-flex {
+    flex-direction: column;
+    gap: 1.5rem;
   }
 }

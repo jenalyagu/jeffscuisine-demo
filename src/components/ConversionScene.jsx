@@ -109,12 +109,12 @@ export default function ConversionScene() {
                 <label htmlFor="cf-phone">Phone</label>
                 <input id="cf-phone" name="phone" type="tel" placeholder="(555) 000-0000" value={fields.phone} onChange={handleChange} />
               </div>
-              <div className="form-group" style={{ display: 'flex', gap: '1rem' }}>
-                <div style={{ flex: 1 }}>
+              <div className="form-group form-flex">
+                <div>
                   <label htmlFor="cf-date">Event Date</label>
                   <input id="cf-date" name="event-date" type="date" value={fields['event-date']} onChange={handleChange} />
                 </div>
-                <div style={{ flex: 1 }}>
+                <div>
                   <label htmlFor="cf-guests">Guest Count</label>
                   <input id="cf-guests" name="guests" type="number" placeholder="Estimated guests" min="1" value={fields.guests} onChange={handleChange} />
                 </div>
