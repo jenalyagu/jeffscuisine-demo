@@ -7,6 +7,7 @@ import MenuScene from './components/MenuScene';
 import CommunityTrustScene from './components/CommunityTrustScene';
 import ConversionScene from './components/ConversionScene';
 import FloatingUI from './components/FloatingUI';
+import SeedSowingDashboard from './components/SeedSowingDashboard';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,6 +22,7 @@ function App() {
       <EateryVibeScene />
       <MenuScene />
       <CommunityTrustScene />
+      <SeedSowingDashboard />
       <ConversionScene />
       <FloatingUI />
     </main>
