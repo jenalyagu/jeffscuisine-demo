@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MapPin } from 'lucide-react';
 
-const INITIAL = { name: '', email: '', phone: '', 'event-date': '', guests: '' };
+const INITIAL = { name: '', email: '', phone: '', 'event-date': '', guests: '', 'event-type': '', notes: '' };
 
 export default function ConversionScene() {
   const [fields, setFields] = useState(INITIAL);
@@ -58,14 +58,20 @@ export default function ConversionScene() {
           <p className="text-sand" style={{ opacity: 0.8, marginTop: '0.25rem' }}>
             <a href="tel:+12093863525" style={{ color: 'var(--color-mango)', textDecoration: 'none' }}>(209) 386-3525</a>
           </p>
-          <p className="text-sand" style={{ opacity: 0.65, fontSize: '0.9rem', marginTop: '0.4rem' }}>
+          <p className="text-sand" style={{ opacity: 0.65, fontSize: '0.9rem', marginTop: '0.35rem' }}>
+            Mon–Sat &nbsp;11AM–7PM &nbsp;·&nbsp; Closed Sundays
+          </p>
+          <p className="text-sand" style={{ opacity: 0.55, fontSize: '0.85rem', marginTop: '0.25rem' }}>
             Serving Atwater, Merced, and the Central Valley
           </p>
         </div>
 
+        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-mango)', marginBottom: '0.75rem' }}>
+          Ready to Eat or Planning an Event?
+        </p>
         <h2 className="text-sand" style={{ marginBottom: '1rem' }}>
-          Ready to Eat or <br />
-          <span className="text-mango">Planning an Event?</span>
+          Bring Filipino Comfort Food<br />
+          <span className="text-mango">to Your Table</span>
         </h2>
 
         <p className="text-sand" style={{ maxWidth: '560px', margin: '0 auto 2.5rem', opacity: 0.85, lineHeight: '1.7' }}>
@@ -118,6 +124,30 @@ export default function ConversionScene() {
                   <label htmlFor="cf-guests">Guest Count</label>
                   <input id="cf-guests" name="guests" type="number" placeholder="Estimated guests" min="1" value={fields.guests} onChange={handleChange} />
                 </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="cf-event-type">Event Type</label>
+                <select id="cf-event-type" name="event-type" value={fields['event-type']} onChange={handleChange}>
+                  <option value="">Select event type…</option>
+                  <option value="Birthday Party">Birthday Party</option>
+                  <option value="Quinceañera">Quinceañera</option>
+                  <option value="Graduation">Graduation</option>
+                  <option value="Family Gathering">Family Gathering</option>
+                  <option value="Community Event">Community Event</option>
+                  <option value="Corporate Event">Corporate Event</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="cf-notes">Menu Requests / Notes</label>
+                <textarea
+                  id="cf-notes"
+                  name="notes"
+                  placeholder="Tell us about your event — menu preferences, dietary needs, or anything else we should know."
+                  rows={4}
+                  value={fields.notes}
+                  onChange={handleChange}
+                />
               </div>
               {status === 'error' && (
                 <p style={{ color: '#ff6b6b', fontSize: '0.9rem', marginTop: '0.5rem' }}>
