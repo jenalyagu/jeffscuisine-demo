@@ -1,113 +1,73 @@
-import { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
+import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
+
+const TOTAL_FRAMES = 96;
+const FIRST_FRAME_INDEX = 101;
 
 const ScrollytellingEngine = forwardRef((props, ref) => {
   const canvasRef = useRef(null);
-  const [images, setImages] = useState([]);
+  const imagesRef = useRef([]);
   const frameIndexRef = useRef(0);
-  
-  // Total frames: 96
-  const totalFrames = 96;
+  const loadedCountRef = useRef(0);
+
+  const renderFrame = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const img = imagesRef.current[frameIndexRef.current];
+    if (!img?.complete || img.naturalWidth === 0) return;
+
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const cw = canvas.width, ch = canvas.height;
+    const ir = img.naturalWidth / img.naturalHeight;
+    const cr = cw / ch;
+    let dw = cw, dh = ch, ox = 0, oy = 0;
+    if (cr > ir) { dh = cw / ir; oy = (ch - dh) / 2; }
+    else         { dw = ch * ir; ox = (cw - dw) / 2; }
+    ctx.drawImage(img, ox, oy, dw, dh);
+  };
 
   useImperativeHandle(ref, () => ({
     updateFrame: (index) => {
-      frameIndexRef.current = index;
+      frameIndexRef.current = Math.min(Math.max(index, 0), TOTAL_FRAMES - 1);
       renderFrame();
     }
   }));
 
   useEffect(() => {
-    const loadedImages = [];
-    let loadedCount = 0;
+    imagesRef.current = new Array(TOTAL_FRAMES);
 
-    for (let i = 0; i < totalFrames; i++) {
+    for (let i = 0; i < TOTAL_FRAMES; i++) {
       const img = new Image();
-      // Calculate image index (101 to 196)
-      const index = i + 101;
-      img.src = `/web scroll frames webp/Jeffs_websequence_v${index}.webp`;
-      
+      img.src = `/frames/frame${FIRST_FRAME_INDEX + i}.jpg`;
       img.onload = () => {
-        loadedCount++;
-        if (loadedCount === totalFrames) {
-          setImages(loadedImages);
-          // Initial render once all are loaded
-          requestAnimationFrame(renderFrame);
-        }
+        imagesRef.current[i] = img;
+        loadedCountRef.current += 1;
+        if (i === 0) renderFrame();
       };
-      
-      // Fallback for errors to prevent hanging
-      img.onerror = () => {
-        loadedCount++;
-        if (loadedCount === totalFrames) {
-          setImages(loadedImages);
-        }
-      };
-
-      loadedImages.push(img);
+      imagesRef.current[i] = img;
     }
   }, []);
 
-  const renderFrame = () => {
-    if (images.length < totalFrames || !canvasRef.current) return;
-    
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    
-    // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Ensure index is within bounds
-    const safeIndex = Math.min(Math.max(Math.floor(frameIndexRef.current), 0), totalFrames - 1);
-    const img = images[safeIndex];
-    
-    if (img && img.width > 0) {
-      // Draw to cover
-      const canvasRatio = canvas.width / canvas.height;
-      const imgRatio = img.width / img.height;
-      
-      let drawWidth = canvas.width;
-      let drawHeight = canvas.height;
-      let offsetX = 0;
-      let offsetY = 0;
-      
-      if (canvasRatio > imgRatio) {
-        drawHeight = canvas.width / imgRatio;
-        offsetY = (canvas.height - drawHeight) / 2;
-      } else {
-        drawWidth = canvas.height * imgRatio;
-        offsetX = (canvas.width - drawWidth) / 2;
-      }
-      
-      ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-    }
-  };
-
   useEffect(() => {
-    const handleResize = () => {
-      if (canvasRef.current) {
-        canvasRef.current.width = window.innerWidth;
-        canvasRef.current.height = window.innerHeight;
-        renderFrame();
-      }
+    const onResize = () => {
+      if (!canvasRef.current) return;
+      canvasRef.current.width = window.innerWidth;
+      canvasRef.current.height = window.innerHeight;
+      renderFrame();
     };
-    
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Initial setup
-    
-    return () => window.removeEventListener('resize', handleResize);
-  }, [images]); // Re-bind when images are ready to ensure renderFrame has access to them
+    window.addEventListener('resize', onResize, { passive: true });
+    onResize();
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   return (
-    <canvas 
+    <canvas
       ref={canvasRef}
-      className="scrollytelling-canvas"
       style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        zIndex: 0, // Should be behind other elements but same level as video was
-        pointerEvents: 'none',
+        position: 'absolute', top: 0, left: 0,
+        width: '100%', height: '100%',
+        zIndex: 0, pointerEvents: 'none',
       }}
     />
   );
