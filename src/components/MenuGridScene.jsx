@@ -117,16 +117,29 @@ export default function MenuGridScene() {
   }
 
   return (
-    <section id="menu" ref={sectionRef} style={{ background: '#160800', padding: '6rem 0' }}>
-      <div className="content-container" style={{ textAlign: 'left' }}>
+    <section id="menu" ref={sectionRef} style={{ background: '#160800' }}>
 
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <h2 className="text-sand">Our Menu</h2>
-          <p className="text-sand" style={{ marginTop: '0.75rem', opacity: 0.6 }}>
+      {/* Photo header — image from How to Enjoy */}
+      <div style={{ position: 'relative', height: '55vh', overflow: 'hidden' }}>
+        <img
+          src="/4BF34EED-6190-424E-AF00-25B068EF1C03.PNG"
+          alt="Overhead view of a Filipino catering spread — lumpia, skewers, pancit, and rice served by Jeff's Cuisine in Atwater CA"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+          loading="lazy"
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(22,8,0,0.3), rgba(22,8,0,0.85))' }} />
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', padding: '3rem 2rem', textAlign: 'center' }}>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-mango)', marginBottom: '0.6rem' }}>
+            Jeff's Cuisine
+          </p>
+          <h2 className="text-sand" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.7)', marginBottom: '0.5rem' }}>Our Menu</h2>
+          <p className="text-sand" style={{ opacity: 0.7, fontSize: '1rem' }}>
             Authentic Filipino food made fresh daily in Atwater, CA
           </p>
         </div>
+      </div>
+
+      <div className="content-container" style={{ textAlign: 'left', paddingTop: '4rem', paddingBottom: '6rem' }}>
 
         {/* Filter Tabs */}
         <div className="menu-filter-bar">
