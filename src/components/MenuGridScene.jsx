@@ -10,12 +10,12 @@ const menuItems = [
   { name: 'Chicken Adobo Meal',   price: '$9.99',  category: 'Meals',    desc: 'Chicken adobo, choice of white or fried rice, pancit noodles, vegetables, and 5 lumpia.',    img: '/menu-photos/Chicken Adobo Meal.jpg' },
   { name: 'Pork Adobo Meal',      price: '$9.99',  category: 'Meals',    desc: 'Pork adobo, choice of white or fried rice, pancit noodles, vegetables, and 5 lumpia.',       img: '/menu-photos/Pork Adobo Meal.jpg' },
   { name: 'Chicken Cutlet Meal',  price: '$9.99',  category: 'Meals',    desc: 'Breaded chicken cutlet, choice of white or fried rice, pancit noodles, and 5 lumpia.',       img: '/menu-photos/Chicken Cutlet Meal.jpg' },
-  { name: 'Mini-Meal',            price: '$8.75',  category: 'Meals',    desc: 'Mini-size meat option with white or fried rice, pancit noodles, vegetables, and 5 lumpia.',  img: '/menu-photos/Mini-Meal.jpg' },
+  { name: 'Mini-Meal',            price: '$8.75',  category: 'Meals',    desc: 'Mini-size meat option with white or fried rice, pancit noodles, vegetables, and 5 lumpia.',  img: '/menu-photos/Mini-Meal.jpg',         imgPos: 'right bottom' },
   { name: 'Pork Lumpia',          price: '$8.75',  category: 'Sides',    desc: 'Crispy Filipino spring rolls filled with seasoned pork and vegetables. 17 pieces.',         img: '/menu-photos/Pork Lumpia.jpg' },
   { name: 'Chicken Lumpia',       price: '$8.75',  category: 'Sides',    desc: 'Crispy Filipino spring rolls filled with seasoned chicken and vegetables. 17 pieces.',      img: '/menu-photos/Chicken Lumpia.jpg' },
   { name: 'Fried Rice',           price: '$8.99',  category: 'Sides',    desc: 'Seasoned fried rice with peas and carrots. A classic Filipino staple.',                     img: '/menu-photos/Fried Rice.jpg' },
-  { name: 'Pancit Guisado',       price: '$9.99',  category: 'Sides',    desc: 'Filipino bihon noodles stir-fried with mixed vegetables and savory seasonings.',            img: '/menu-photos/Pancit Guisado.jpg' },
-  { name: 'Filipino Spaghetti',   price: '$9.99',  category: 'Sides',    desc: 'Sweet-style spaghetti with banana sauce, hot dogs, ground beef, and tomato sauce.',        img: '/menu-photos/Filipino Spaghetti.jpg' },
+  { name: 'Pancit Guisado',       price: '$9.99',  category: 'Sides',    desc: 'Filipino bihon noodles stir-fried with mixed vegetables and savory seasonings.',            img: '/menu-photos/Pancit Guisado.jpg',       imgPos: 'right bottom' },
+  { name: 'Filipino Spaghetti',   price: '$9.99',  category: 'Sides',    desc: 'Sweet-style spaghetti with banana sauce, hot dogs, ground beef, and tomato sauce.',        img: '/menu-photos/Filipino Spaghetti.jpg',   imgPos: 'right bottom' },
   { name: 'Pork BBQ Tray',        price: '$79.00', category: 'Catering', desc: 'Medium catering tray of tender pork skewers in sweet-savory barbecue sauce.',              img: '/menu-photos/Pork BBQ.jpg' },
   { name: 'Chicken BBQ Tray',     price: '$79.00', category: 'Catering', desc: 'Medium catering tray of juicy chicken skewers in sweet-savory barbecue sauce.',            img: '/menu-photos/Chicken BBQ.jpg' },
 ];
@@ -63,11 +63,11 @@ const additionalItems = [
   ]},
 ];
 
-function MenuCard({ name, price, desc, img }) {
+function MenuCard({ name, price, desc, img, imgPos = 'center' }) {
   return (
     <div className="menu-card">
       <div className="menu-card-image-wrap">
-        <img src={img} alt={name} className="menu-card-img" loading="lazy" />
+        <img src={img} alt={name} className="menu-card-img" loading="lazy" style={{ objectPosition: imgPos }} />
         <div className="menu-card-overlay">
           <p className="menu-card-desc">{desc}</p>
         </div>
