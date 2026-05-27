@@ -37,10 +37,10 @@ const bulletStyle = {
   display: 'flex',
   flexDirection: 'column',
   gap: '0.5rem',
-  marginTop: '1.5rem',
+  marginTop: '0.75rem',
   textAlign: 'left',
   maxWidth: '480px',
-  margin: '1.5rem auto 0',
+  margin: '0.75rem auto 0',
 };
 
 const bulletItemStyle = {
@@ -143,7 +143,7 @@ export default function HeroScene() {
           <h2 className="text-sand" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.7)', marginBottom: '0.5rem' }}>
             Filipino Classics<br />Made Fresh Daily
           </h2>
-          <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', color: 'var(--color-mango)', fontSize: 'clamp(1rem, 2.5vw, 1.4rem)', marginBottom: '1.25rem' }}>
+          <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', color: 'var(--color-mango)', fontSize: 'clamp(1rem, 2.5vw, 1.4rem)', marginBottom: '0.5rem' }}>
             Comfort, Flavor &amp; Family on Every Plate
           </p>
           <p className="text-sand" style={{ opacity: 0.88, lineHeight: '1.7', maxWidth: '620px', margin: '0 auto', textShadow: '0 2px 10px rgba(0,0,0,0.7)' }}>
